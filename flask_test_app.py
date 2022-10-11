@@ -13,3 +13,5 @@ data = (
 @app.route('/')
 def table():
     return render_template('table.html',headings=headings,data=data)
+
+app.run(debug = True)
