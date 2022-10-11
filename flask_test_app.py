@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -14,4 +14,11 @@ data = (
 def table():
     return render_template('table.html',headings=headings,data=data)
 
-app.run(debug = True)
+@app.route('/button', methods = ['GET'])
+def my_link():
+#   person = request.form.get('human')
+    if request.method == 'GET':
+        return 'Board has been created for: ' + request.args.get('agent_id')
+
+if __name__ == '__main__':
+  app.run(debug=True)
