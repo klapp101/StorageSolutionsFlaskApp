@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1 class="index__header_main">Open Work Orders Without A Test</h1>
+        <h3 class="index__header_refresh">Lastest Refresh Times</h3>
+
+        <table class="table__main">
+            <tr class="table__header">
+                {% for col in entry_column_names %}
+                <th class="table__cell">{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in entry_row_data %}
+            <tr class="table__header">
+                {% for col, row_ in zip(entry_column_names, row) %}
+                <th class="table__cell">{{ row_ }}</th>
+                {% endfor %}
+            {% endfor %}
+            </tr>
+        </table>
+        <form class="form__tests" action="/tests" target="_blank">
+            <input type="submit" value="Go to List of Added Tests" />
+        </form>
+        <table class="table__main">
+            <tr class="table__header">
+                {% for col in column_names %}
+                <th class="table__cell">{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in row_data %}
+            <tr class="table__header">
+                {% for col, row_ in zip(column_names, row) %}
+                {% if col == link_column %}
+                <td class="table__cell">
+                    <form method="POST">
+                        <input type="submit" name="test_code" value={{ row_ }} />
+                    </form>
+                </td>
+                {% else %}
+                <td class="table__cell">{{row_}}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        
+        </table>
+    </body>
+</html>
