@@ -1,3 +1,18 @@
+.index__header_main {
+    border-spacing: 0;
+    margin: 1rem;
+}
+
+.index__header_refresh {
+    border-spacing: 0;
+    margin: 1rem;
+}
+
+.form__boards {
+    border-spacing: 0;
+    margin: 1rem;
+}
+
 .table__main {
     border-spacing: 0;
     margin: 1rem;
