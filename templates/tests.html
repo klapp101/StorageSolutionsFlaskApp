@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Boards</title>
+        <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>Boards</h1>
+        <form class="form__tests" action="/" target="_blank">
+            <input type="submit" value="Go Back to Main List" />
+        </form>
+        <ol>
+            {% for entry in entries %} <li><p>Test Code: {{ entry }}</p></li><a href='deletetest/{{ entry }}'>Delete</a> {% endfor %}
+        </ol>
+    </body>
+</html>
