@@ -3,16 +3,36 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Boards</title>
-        <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+        <title>Tests</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="static/custom.css" type="text/css" />
+        <link rel="stylesheet" href="static/styles.css" type="text/css" />
     </head>
     <body>
-        <h1>Boards</h1>
-        <form class="form__tests" action="/" target="_blank">
-            <input type="submit" value="Go Back to Main List" />
-        </form>
-        <ol>
-            {% for entry in entries %} <li><p>Test Code: {{ entry }}</p></li><a href='deletetest/{{ entry }}'>Delete</a> {% endfor %}
-        </ol>
+        <header class="d-flex flex-column min-vh-100">
+            <div class="container color-overlay p-3 p-md-5">
+                <div class="row">
+                    <h1>Tests</h1>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <h4><small>Click "Delete" to remove a test from the list.</small></h4>
+                        <form class="form__boards" action="/test_data">
+                            <input class="btn btn-outline-light" type="submit" value="Go Back to Test Data" />
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <h4><small>Click "Create Tests" and the tests will be created.</small></h4>
+                        <form class="form__boards" action="#">
+                            <input class="btn btn-outline-light" type="submit" value="Create Tests" />
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <ol>
+                            {% for entry in entries %} <li><p>Test Code: {{ entry }}</p></li><a class="btn btn-outline-light" href='deletetest/{{ entry }}'>Delete</a> {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </header>
     </body>
 </html>
