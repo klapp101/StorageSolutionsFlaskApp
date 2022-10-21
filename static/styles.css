@@ -1,6 +1,7 @@
 .index__header_main {
     border-spacing: 0;
     margin: 1rem;
+    color:black;
 }
 
 .index__header_refresh {
@@ -11,6 +12,7 @@
 .form__boards {
     border-spacing: 0;
     margin: 1rem;
+    padding: 8px
 }
 
 .table__main {
@@ -30,3 +32,4 @@
 .table__cell {
     padding: 8px
 }
+
