@@ -25,27 +25,35 @@ def connection():
     conn = pyodbc.connect(cstr)
     return conn
     
-@app.route("/",methods=['GET','POST'])
+@app.route('/',methods=['GET','POST'])
+def home():
+    conn = connection()
+    df_last_successful_run = pd.read_sql_query("SELECT [Name],[LastSuccessfulRun] FROM [testapp].[load].[OuvviProjects] WHERE [Index] IN (1,2)", conn)
+    conn.close()
+    return render_template('home.html',column_names=df_last_successful_run.columns.values, row_data = list(df_last_successful_run.values.tolist()),zip=zip)
+    
+@app.route("/test_data",methods=['GET','POST'])
 def main():
     conn = connection()
     cursor = conn.cursor()
-    df = pd.read_sql_query("SELECT [test_code],[test_revision],[test_description],[test_notes],[test_active],[NumOpenWorkOrders],w.WOStatus FROM [test_app].[test_api].[test_create] c INNER JOIN [test_app].dim.WorkOrders w ON c.TESTPARENT = w.TEST_KEY WHERE c.TestBoardId = 0 AND NumOpenWorkOrders > 0 AND WOStatus = 'Open'", conn)
-    df_last_successful_run = pd.read_sql_query("SELECT [Name],[LastSuccessfulRun] FROM [test_app].[load].[OuvviProjects] WHERE [Index] IN (1,2)", conn)
+    df = pd.read_sql_query("SELECT c.[BOMPARENT],[test_code],[test_revision],[test_description],[test_notes],[test_active],[NumOpenWorkOrders],w.WOStatus FROM [testapp].[testipi].[test_create] c INNER JOIN [testapp].dim.WorkOrders w ON c.BOMPARENT = w.UNIQ_KEY WHERE c.TestTestId = 0 AND NumOpenWorkOrders > 0 AND WOStatus = 'Open'", conn)
     if request.method == 'POST':
-        test_code = request.form.to_dict()
-        test_code = test_code['test_code']
-        cursor.execute("INSERT INTO [test_app].[test_api].[testcodes] (test_code) VALUES (?)", test_code)
+        test_data = request.form.to_dict()
+        bomparent = test_data['BOMPARENT']
+        test_code = test_data['test_code']
+        test_revision = test_data['test_revision']
+        cursor.execute("INSERT INTO [testapp].[testapi].[testcodes] (BOMPARENT,test_code,test_revision) VALUES (?, ?, ?)",bomparent,test_code,test_revision)
         conn.commit()
         conn.close()
-        return redirect('/')
+        return redirect('/test_data')
     return render_template('index.html',column_names=df.columns.values, row_data=list(df.values.tolist()),
-                        link_column="test_code", zip=zip, entry_column_names=df_last_successful_run.columns.values, entry_row_data=list(df_last_successful_run.values.tolist()))
+                        link_column="test_data", zip=zip)
 
 @app.route('/tests')
 def show_tests():
     conn = connection()
     cursor = conn.cursor()
-    df = pd.read_sql_query("SELECT [test_code] FROM [test_app].[test_api].[testcodes]", conn)
+    df = pd.read_sql_query("SELECT [test_code] FROM [testapp].[testapi].[testcodes]", conn)
     conn.close()
     return render_template('tests.html',entries=df['test_code'])
 
@@ -53,7 +61,7 @@ def show_tests():
 def delete_test(test_code):
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM [test_app].[test_api].[testcodes] WHERE test_code = ?", test_code)
+    cursor.execute("DELETE FROM [testapp].[testapi].[test_codes] WHERE test_code = ?", test_code)
     conn.commit()
     print('The following test code has been removed from the database: ' + test_code)
     conn.close()
