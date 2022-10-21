@@ -1,0 +1,16 @@
+body {
+    background: no repeat center center;
+    background-size: cover;
+    background-color: white;
+    color:white;
+    min-height: 100vh;
+}
+
+.color-overlay {
+    max-width: 750px;
+    background-color: rgba(0,0,0,.75);
+}
+
+.color-overlay-board-table {
+    background-color: rgba(0,0,0,.75);
+}
