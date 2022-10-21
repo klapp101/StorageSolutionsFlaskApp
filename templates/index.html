@@ -1,51 +1,58 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+        <link href="/static/custom.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <h1 class="index__header_main">Open Work Orders Without A Test</h1>
-        <h3 class="index__header_refresh">Lastest Refresh Times</h3>
-
-        <table class="table__main">
-            <tr class="table__header">
-                {% for col in entry_column_names %}
-                <th class="table__cell">{{col}}</th>
-                {% endfor %}
-            </tr>
-            {% for row in entry_row_data %}
-            <tr class="table__header">
-                {% for col, row_ in zip(entry_column_names, row) %}
-                <th class="table__cell">{{ row_ }}</th>
-                {% endfor %}
-            {% endfor %}
-            </tr>
-        </table>
-        <form class="form__tests" action="/tests" target="_blank">
-            <input type="submit" value="Go to List of Added Tests" />
-        </form>
-        <table class="table__main">
-            <tr class="table__header">
-                {% for col in column_names %}
-                <th class="table__cell">{{col}}</th>
-                {% endfor %}
-            </tr>
-            {% for row in row_data %}
-            <tr class="table__header">
-                {% for col, row_ in zip(column_names, row) %}
-                {% if col == link_column %}
-                <td class="table__cell">
-                    <form method="POST">
-                        <input type="submit" name="test_code" value={{ row_ }} />
-                    </form>
-                </td>
-                {% else %}
-                <td class="table__cell">{{row_}}</td>
-                {% endif %}
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        
-        </table>
+        <div class="container">
+            <h1 class="index__header_main">Open Work Orders Without A Test</h1>
+            <h4 class="index__header_main"><small>Click any button in the far left column in the table below to add a board to the list.</small></h4>
+            <form class="form__boards" action="/">
+                <input type="submit" value="Go Home" />
+            </form>
+            <form class="form__boards" action="/tests">
+                <input type="submit" value="Go to Selected Tests" />
+            </form>
+        </div>
+        <header class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+            <div class="container color-overlay-board-table p-3 p-md-5">
+                <div class="row">
+                    <table class="">
+                        <tr class="table__header">
+                            {% for col in column_names %}
+                            <th class="table__cell">{{col}}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for row in row_data %}
+                        <tr class="table__header">
+                            {% for col, row_ in zip(column_names, row) %}
+                            <!-- If the column equals test_code -->
+                            <form method="POST">
+                            {% if col == link_column %}
+                            <td class="table__cell">
+                                <input class="btn btn-outline-light" type="submit" name="test_code" value={{ row_ }} />
+                            </td>
+                            {% elif col == "BOMPARENT" %}
+                            <td class="table__cell">
+                                <input type="hidden" name="BOMPARENT" value={{ row_ }} />
+                                {{row_}}</td>
+                            {% elif col == "test_revision" %}
+                            <td class="table__cell">
+                                <input type="hidden" name="test_revision" value={{ row_ }} />
+                            </td>
+                            </form>
+                            {% else %}
+                            <td class="table__cell">{{row_}}</td>
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </header>
     </body>
 </html>
