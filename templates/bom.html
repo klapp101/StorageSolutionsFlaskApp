@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+        <link href="/static/custom.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="index__header_main">BOM Page</h1>
+            <h4 class="index__header_main"><small>View the items available for the tests that were selected.</small></h4>
+            <form class="form__tests" action="/">
+                <input type="submit" value="Go Home" />
+            </form>
+            <form class="form__tests" action="/tests">
+                <input type="submit" value="Go to Selected Tests" />
+            </form>
+        </div>
+        <header class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+            <div class="container color-overlay-test-table p-3 p-md-5">
+                <div class="row">
+                    <table class="table_test">
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for WorkOrders...">
+                        <tr class="table__header">
+                            {% for col in column_names %}
+                            <th class="table__cell">{{col}}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for row in row_data %}
+                        <tr class="table__header">
+                            {% for col, row_ in zip(column_names, row) %}
+                                <td class="table__cell">{{row_}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </header>
+        <script>
+            function myFunction() {
+              // Declare variables
+              var input, filter, table, tr, td, i, txtValue;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              table = document.getElementsByClassName("table_test");
+              tr = document.getElementsByTagName("tr");
+            
+              // Loop through all table rows, and hide those who don't match the search query
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+                }
+              }
+            }
+            </script>
+    </body>
+</html>
