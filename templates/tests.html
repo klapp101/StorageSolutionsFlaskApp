@@ -14,16 +14,22 @@
             <div class="container color-overlay p-3 p-md-5">
                 <div class="row">
                     <h1>Tests</h1>
-                    <div class="col-12 col-sm-6 col-md-6">
+                    <div class="col-12 col-sm-4 col-md-4">
                         <h4><small>Click "Delete" to remove a test from the list.</small></h4>
-                        <form class="form__boards" action="/test_data">
+                        <form class="form__tests" action="/test_data">
                             <input class="btn btn-outline-light" type="submit" value="Go Back to Test Data" />
                         </form>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-6">
+                    <div class="col-12 col-sm-4 col-md-4">
                         <h4><small>Click "Create Tests" and the tests will be created.</small></h4>
-                        <form class="form__boards" action="#">
+                        <form class="form__tests" action="/create_tests">
                             <input class="btn btn-outline-light" type="submit" value="Create Tests" />
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <h4><small>Click "View BOM" to see all available test items.</small></h4>
+                        <form class="form__tests" action="/bom_view">
+                            <input class="btn btn-outline-light" type="submit" value="View BOM" />
                         </form>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6">
